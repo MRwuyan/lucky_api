@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: barry
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: classpath:/db/hezong_yinpin_beta0.0.1.sql

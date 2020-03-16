@@ -1,0 +1,190 @@
+
+server:
+  port: 9999
+  #    ssl:
+  #        key-store: SHA256withRSA_allianceart.net.pfx
+  #        key-store-password: 1234
+  #        keyStoreType: PKCS12
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    max-connections: 20000
+spring:
+  application:
+    name: bit1-api
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  datasource:
+    name: test
+    url: jdbc:mysql://cdb-j9s5x39p.gz.tencentcdb.com:10116/szhb_dev?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=CTT
+    username: root
+    password: MYSQLMASSgrid!@#123CN
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      filters: stat
+      maxActive: 30
+      initialSize: 5
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select '1'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+
+      aop-patterns: net.bit1.api.service.*
+      filter:
+        stat:
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 2000
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+  #    zipkin:
+  #        enabled: true
+  #    sleuth:
+  #        sampler:
+  #            percentage: 1
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    #password: hezong
+    timeout: 3000
+    pool:
+      maxActive: 60
+      maxWait: 100
+      maxIdle: 300
+      minIdle: 20
+  session:
+    store-type: none
+  http:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+#    liquibase:
+#        change-log: classpath:dev/db.changelog-master.yaml
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper*.xml
+  typeAliasesPackage: net.bit1.api.dao.entity
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 1
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    meta_object_handler: net.bit1.api.common.mybatis.CustomMetaObjectHandler
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+
+
+
+
+#eureka:
+#    instance:
+#        statusPageUrlPath: /info
+#        healthCheckUrlPath: /health
+#    client:
+#        serviceUrl:
+#            defaultZone: http://localhost:8761/eureka/
+#
+#feign:
+#    httpclient:
+#        enabled: false
+#    okhttp:
+#        enabled: true
+
+swagger:
+  basepackage: net.bit1.api..*
+  service:
+    name: bit1-api
+    description: bit1 RESTful API
+    developer: product division
+
+jwt:
+  secret:
+    U2FsdGVkX199gcOf001xqO8TCWlZ8k5j
+
+logging:
+  config: classpath:logback.xml
+
+#jpush:
+#  appKey: f19d97cef1124b268a1dfd81
+#  masterSecret: eebb486ba0917c3383dfb0bb
+
+#pingxx:
+#  apiKey: sk_
+#  appId: app_
+#  privateKey: -----BEGIN RSA PRIVATE KEY-----
+#              -----END RSA PRIVATE KEY-----
+
+
+#logic:
+#  setting:
+#    mail:
+#      mail_name: 11111
+#      mail_password:
+#      mail_server_host:
+#      mail_server_port:
+
+
+#ali:
+#  sms:
+#    accessKeyId:
+#    secretAccessKy:
+#  oss:
+#    accessKeyId:
+#    secretAccessKy:
+#    endPoint:
+#    bucketHost:
+
+
+
+#云上传环境，可选值，“baidu”，或者 "ali"
+yunUploadEnv: ali
+
+
+javamelody:
+  advisor-auto-proxy-creator-enabled: false
+  scheduled-monitoring-enabled: true
+  # Enable JavaMelody auto-configuration (optional, default: true)
+  enabled: true
+  # Data source names to exclude from monitoring (optional, comma-separated)
+  excluded-datasources: secretSource,topSecretSource
+  # Enable monitoring of Spring services and controllers (optional, default: true)
+  spring-monitoring-enabled: true
+  # Initialization parameters for JavaMelody (optional)
+  # See: https://github.com/javamelody/javamelody/wiki/UserGuide#6-optional-parameters
+  init-parameters:
+    # log http requests:
+    log: true
+    # to exclude images, css, fonts and js urls from the monitoring:
+    #url-exclude-pattern: (/webjars/.*|/css/.*|/images/.*|/fonts/.*|/js/.*)
+    # to aggregate digits in http requests:
+    #http-transform-pattern: \d+
+    # to add basic auth:
+    # 不生效，需要手动设置，具体看 config类
+    authorized-users: admin:Hezong-2018
+    #authorized-users: admin:pwd
+    # to change the default storage directory:
+    #storage-directory: /tmp/javamelody
+    # to change the default "/monitoring" path:

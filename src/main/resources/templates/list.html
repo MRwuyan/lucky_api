@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>报价工具</title>
+</head>
+<body>
+
+<style>
+    th{
+        margin-right: 50px;
+    }
+
+    tr,td{
+        border: 1px solid #000000;
+
+        margin: 10px;
+        padding: 10px;
+
+    }
+
+
+</style>
+
+<h2>价格时间：</h2>
+<h1  th:text="${thisTimeStr}" ></h1>
+
+<table>
+
+    <tr>
+        <th style="margin-right: 150px">交易对名字</th>
+        <th>20%</th>
+        <th>10%</th>
+        <th>5%</th>
+        <th>基准</th>
+        <th>-5%</th>
+        <th>-10%</th>
+        <th>-20%</th>
+    </tr>
+
+    <tr th:each="item:${list}">
+        <td style="margin-right: 150px" th:text="${item.coinName}"></td>
+        <td th:text="${item.get120()}"></td>
+        <td th:text="${item.get110()}"></td>
+        <td th:text="${item.get105()}"></td>
+        <td  style="color:red"   th:text="${item.basePrice}"></td>
+        <td th:text="${item.get095()}"></td>
+        <td th:text="${item.get090()}"></td>
+        <td th:text="${item.get080()}"></td>
+
+    </tr>
+
+</table>
+
+<script>
+    //1分钟刷新一次
+    var time = window.setInterval(function(){
+        console.log("刷新 ")
+        window.location.reload();
+    },60000)
+
+
+
+
+</script>
+
+
+</body>
+</html>
