@@ -55,6 +55,7 @@ spring:
       web-stat-filter:
         enabled: true
         url-pattern: /*
+
   #    zipkin:
   #        enabled: true
   #    sleuth:
