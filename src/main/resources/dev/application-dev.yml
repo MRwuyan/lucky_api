@@ -96,7 +96,6 @@ spring:
   mvc:
     static-path-pattern : classpath:/templates/
 
-
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*Mapper*.xml
   typeAliasesPackage: com.exhk.robot.order.dao.entity
@@ -136,6 +135,13 @@ pagehelper:
 #        enabled: false
 #    okhttp:
 #        enabled: true
+zuul:
+  routes:
+    api-a-url:
+      path: /api-a-url/**
+      url: http://localhost:9998/
+
+
 
 swagger:
   basepackage: net.bit1.api..*
